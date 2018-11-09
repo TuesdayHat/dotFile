@@ -1,0 +1,11 @@
+/elpa/
+.recentf
+*~
+eclipse.jdt.ls
+/auto-save-list/
+/backups/
+/var/
+/workspace/
+cider-history
+.last-package-update-day
+.smex-items
