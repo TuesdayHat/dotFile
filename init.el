@@ -11,6 +11,7 @@
 ;                                  ))
 ;  (require 'use-package))
 
+;bootstrap use-package
  (unless (package-installed-p 'use-package)
  	(package-refresh-contents)
  (package-install 'use-package))
@@ -44,7 +45,12 @@
                           (setq sublimity-scroll-weight 10
                             sublimity-scroll-drift-length 5))
              )
-(use-package ibuffer :ensure t)
+(use-package ibuffer :ensure t
+             :config
+             (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
+             (setq ibuffer-default-sorting-mode 'major-mode)
+             (add-to-list 'ibuffer-never-show-predicates "^\\*");hide buffers beginning with a *
+             )
 (use-package company-shell :ensure t)
 (use-package zeal-at-point :ensure t)
 (use-package which-key :ensure t
@@ -54,13 +60,33 @@
              (setq which-key-popup-type 'frame)
              (setq which-key-frame-max-width 60)
              (setq which-key-frame-max-height 20))
-(use-package no-littering :ensure t)
+(use-package no-littering :ensure t
+             :config
+             (require 'recentf)
+             (add-to-list 'recentf-exclude no-littering-var-directory)
+             (add-to-list 'recentf-exclude no-littering-etc-directory)
+             (setq auto-save-file-name-transforms
+               `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 (use-package auto-minor-mode :ensure t)
 (use-package general :ensure t)
-(use-package ivy :ensure t)
-(use-package counsel :ensure t)
-(use-package iedit :ensure t)
+(use-package ivy :ensure t
+             :config (ivy-mode 1)
+             (global-set-key (kbd "C-s") 'swiper)
+             (global-set-key (kbd "M-x") 'counsel-M-x)
+             (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+             (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+             (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+             (global-set-key (kbd "<f1> l") 'counsel-find-library)
+             (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+             (global-set-key (kbd "<f2> u") 'counsel-unicode-char))
+(use-package counsel :ensure t
+             :hook ivy)
+(use-package swiper :ensure t
+             :hook ivy)
+(use-package iedit :ensure t
+             :bind ("C-M-." . iedit-mode))
 (use-package ido-completing-read+ :ensure t)
+
 
 ;;Code Completion
 (use-package smartparens :ensure t
@@ -130,7 +156,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;'(package-selected-packages (quote (use-package)))
+ '(package-selected-packages
+   (quote
+    (helm zeal-at-point yasnippet-snippets which-key use-package sublimity smex smartparens rainbow-delimiters projectile pdf-tools paredit nov no-littering multiple-cursors magit lsp-ui lsp-python lsp-java importmagic iedit ido-completing-read+ general counsel company-shell company-lsp clojure-mode-extra-font-locking cider better-defaults auto-package-update auto-minor-mode)))
  '(truncate-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
