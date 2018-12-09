@@ -5,12 +5,6 @@
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-; (eval-when-compile
-;  (add-to-list 'load-path (append '("~/.emacs.d/elpa")
-;                                  ;;'("elpa/use-package-20180715.1801/use-package.el")
-;                                  ))
-;  (require 'use-package))
-
 ;bootstrap use-package
  (unless (package-installed-p 'use-package)
  	(package-refresh-contents)
@@ -23,10 +17,12 @@
 (use-package smex :ensure t)
 (use-package nov :ensure t
              :mode "\\.epub\\'")
-(use-package pdf-tools :ensure t
-             :magic ("%PDF" . pdf-view-mode)
+(use-package pdf-tools 
+	     :ensure t
+	     :mode (("\\.pdf\\'" . pdf-view-mode))
              :config
-             (pdf-tools-install))
+             (pdf-tools-install)
+             )
 (use-package magit :ensure t)
 (use-package rainbow-delimiters :ensure t
              :hook (prog-mode . rainbow-delimiters-mode)
@@ -130,12 +126,12 @@
              :config (setq lsp-ui-doc 1))
 
 
-(use-package auto-package-update
-  :ensure t
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe))
+;; (use-package auto-package-update
+;;   :ensure t
+;;   :config
+;;   (setq auto-package-update-delete-old-versions t)
+;;   (setq auto-package-update-hide-results t)
+;;   (auto-package-update-maybe))
 
 ;;customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
@@ -158,7 +154,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm zeal-at-point yasnippet-snippets which-key use-package sublimity smex smartparens rainbow-delimiters projectile pdf-tools paredit nov no-littering multiple-cursors magit lsp-ui lsp-python lsp-java importmagic iedit ido-completing-read+ general counsel company-shell company-lsp clojure-mode-extra-font-locking cider better-defaults auto-package-update auto-minor-mode)))
+    (zeal-at-point yasnippet-snippets which-key use-package sublimity smex smartparens rainbow-delimiters projectile pdf-tools paredit nov no-littering multiple-cursors magit lsp-ui lsp-python lsp-java importmagic iedit ido-completing-read+ helm general counsel company-shell company-lsp clojure-mode-extra-font-locking cider better-defaults auto-package-update auto-minor-mode)))
  '(truncate-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
